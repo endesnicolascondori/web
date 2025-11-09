@@ -1068,7 +1068,7 @@
             
             <!-- Timeline Link Buttons -->
             <div class="timeline-links">
-                <a href="https://example.com/timeline-1840-1969" target="_blank" class="timeline-link-btn">
+                <a href="https://www.canva.com/design/DAG20c2DZ5M/jZUXD366XYzFPMINu33tQA/edit" target="_blank" class="timeline-link-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
                     </svg>
@@ -1078,7 +1078,7 @@
                     </div>
                 </a>
                 
-                <a href="https://example.com/timeline-1990-2024" target="_blank" class="timeline-link-btn btn-secondary">
+                <a href="https://www.canva.com/design/DAG2z_V-kl0/hmudJeJuZLtMCDfYrR7mpQ/edit" target="_blank" class="timeline-link-btn btn-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
                     </svg>
@@ -1154,6 +1154,44 @@
     </div>
 
     <script>
+        // ============================================
+        // CONFIGURACIÓN DEL BOTÓN FLOTANTE
+        // ============================================
+        // Aquí puedes configurar en qué páginas aparece el botón flotante
+        // y el enlace correspondiente para cada página
+        
+        const floatingButtonConfig = {
+            inicio: {
+                show: false,  // true = mostrar botón, false = ocultar botón
+                url: 'https://example.com/inicio',
+                tooltip: 'Ir al enlace de inicio'
+            },
+            timeline: {
+                show: false,  // No mostrar en timeline porque ya hay botones
+                url: 'https://example.com/timeline',
+                tooltip: 'Ver más sobre línea de tiempo'
+            },
+            reserva: {
+                show: true,
+                url: 'https://www.canva.com/design/DAG3kNHU-0I/y6Hg5zKy6JCLuZaYz9k-uQ/edit',
+                tooltip: 'Más información sobre Paracas'
+            },
+            mapa: {
+                show: false,
+                url: 'https://example.com/mapa-vulnerabilidad',
+                tooltip: 'Ver mapa interactivo'
+            },
+            informe: {
+                show: false,  // No mostrar porque ya hay un botón grande
+                url: 'https://example.com/informe',
+                tooltip: 'Descargar informe'
+            }
+        };
+        
+        // ============================================
+        // FIN DE CONFIGURACIÓN
+        // ============================================
+
         // Page Navigation
         function showPage(pageId) {
             // Hide all pages
@@ -1207,19 +1245,22 @@
         setInterval(nextSlide, 5000);
 
         // Floating Link functionality
-        const floatingLinks = {
-            'inicio': '#',
-            'timeline': 'https://example.com/timeline',
-            'reserva': 'https://example.com/reserva',
-            'mapa': 'https://example.com/mapa',
-            'informe': 'https://example.com/informe'
-        };
-
         function updateFloatingLink(pageId) {
             const floatingLink = document.getElementById('floatingLink');
-            floatingLink.onclick = function() {
-                window.open(floatingLinks[pageId], '_blank');
-            };
+            const tooltip = floatingLink.querySelector('.floating-link-tooltip');
+            const config = floatingButtonConfig[pageId];
+            
+            if (config && config.show) {
+                // Mostrar el botón
+                floatingLink.style.display = 'flex';
+                tooltip.textContent = config.tooltip;
+                floatingLink.onclick = function() {
+                    window.open(config.url, '_blank');
+                };
+            } else {
+                // Ocultar el botón
+                floatingLink.style.display = 'none';
+            }
         }
 
         // Initialize with inicio page
